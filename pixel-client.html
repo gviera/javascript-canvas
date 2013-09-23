@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html>
+  <body>
+    <canvas id="canvas1" width="100" height="100"></canvas>
+	  <script src="http://127.0.0.1:8080/socket.io/socket.io.js"></script> 
+    <script>
+
+    function suprise() {
+      console.log("Suprise!");
+    }
+    
+  	var socket = io.connect('http://localhost:8080');
+  	 socket.on('getImage', function (data) {
+      console.log(data.data.length);
+      var element = document.getElementById("canvas1");
+      var c = element.getContext("2d");
+      var myImageData = c.createImageData(10,10);
+      for (var i = 0; i < data.data.length; i++) {
+        myImageData.data[i] = data.data[i];
+        console.log("["+i+"] = "+data.data[i]);
+      }
+      c.putImageData(myImageData, 0, 0);
+      console.log("Done!");
+      suprise();
+  	});
+	</script>
+  </body>
+</html>
+
